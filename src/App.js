@@ -1,6 +1,5 @@
 import React from "react";
 import CardList from "./CardList";
-import { robots } from "./robots";
 import SearchBox from "./SearchBox";
 import "./App.css";
 import "tachyons";
@@ -9,9 +8,15 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      robots: robots,
+      robots: [],
       searchField: "",
     };
+  }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.cypress.io/users")
+      .then((response) => response.json())
+      .then((users) => this.setState({ robots: users }));
   }
 
   onSearchChange = (event) => {
